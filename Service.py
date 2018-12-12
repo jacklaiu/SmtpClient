@@ -1,4 +1,4 @@
-# -*- coding: utf8 -*-
+# -*- coding: gbk -*-
 from flask import Flask, abort, request, jsonify
 import smtplib
 from email.mime.text import MIMEText
@@ -18,7 +18,7 @@ config.setdefault('sender', "jacklaiu@sina.com")
 
 def send(subject=None, content=None, receivers='jacklaiu@qq.com', contenttype="plain"):
 
-    receivers = [receivers] if receivers.index('@') == -1 else receivers.split('@@')  # æ¥æ”¶é‚®ä»¶ï¼Œå¯è®¾ç½®ä¸ºä½ çš„QQé‚®ç®±æˆ–è€…å…¶ä»–é‚®ç®±
+    receivers = [receivers] if receivers.index('@') == -1 else receivers.split('@@')  # ½ÓÊÕÓÊ¼ş£¬¿ÉÉèÖÃÎªÄãµÄQQÓÊÏä»òÕßÆäËûÓÊÏä
 
     message = MIMEText(content, contenttype, 'utf-8')
     message['From'] = "{}".format(config['sender'])
@@ -32,7 +32,7 @@ def send(subject=None, content=None, receivers='jacklaiu@qq.com', contenttype="p
         smtpObj.connect(config['mail_host'], config['mail_port'])
         smtpObj.login(config['mail_user'], config['mail_pass'])
         smtpObj.sendmail(config['sender'], receivers, message.as_string())
-        log.log("é‚®ä»¶å‘é€æˆåŠŸ")
+        log.log("ÓÊ¼ş·¢ËÍ³É¹¦")
     except Exception as e:
         time.sleep(5)
         config.setdefault('mail_host', "smtp.qq.com")
@@ -40,7 +40,7 @@ def send(subject=None, content=None, receivers='jacklaiu@qq.com', contenttype="p
         config.setdefault('mail_user', "jacklaiu@foxmail.com")
         config.setdefault('mail_pass', "wesmpmzsdcsebfic")
         config.setdefault('sender', "jacklaiu@foxmail.com")
-        log.log("æ­£åœ¨é‡å‘")
+        log.log("ÕıÔÚÖØ·¢")
         send(subject=subject, content=content, receivers=receivers, contenttype=contenttype)
     return "OK" if error_msg is None else error_msg
 

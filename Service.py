@@ -1,12 +1,10 @@
-# -*- coding: gbk -*-
+# -*- coding: utf8 -*-
 from flask import Flask, abort, request, jsonify
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
 import base.Log as log
-import base.Util as util
-import base.Dao as dao
-import tushare as ts
+import time
 
 app = Flask(__name__, static_url_path='')
 app.config['JSON_AS_ASCII'] = False
@@ -20,7 +18,7 @@ config.setdefault('sender', "jacklaiu@sina.com")
 
 def send(subject=None, content=None, receivers='jacklaiu@qq.com', contenttype="plain"):
 
-    receivers = [receivers] if receivers.index('@') == -1 else receivers.split('@@')  # ½ÓÊÕÓÊ¼ş£¬¿ÉÉèÖÃÎªÄãµÄQQÓÊÏä»òÕßÆäËûÓÊÏä
+    receivers = [receivers] if receivers.index('@') == -1 else receivers.split('@@')  # æ¥æ”¶é‚®ä»¶ï¼Œå¯è®¾ç½®ä¸ºä½ çš„QQé‚®ç®±æˆ–è€…å…¶ä»–é‚®ç®±
 
     message = MIMEText(content, contenttype, 'utf-8')
     message['From'] = "{}".format(config['sender'])
@@ -34,18 +32,27 @@ def send(subject=None, content=None, receivers='jacklaiu@qq.com', contenttype="p
         smtpObj.connect(config['mail_host'], config['mail_port'])
         smtpObj.login(config['mail_user'], config['mail_pass'])
         smtpObj.sendmail(config['sender'], receivers, message.as_string())
-        log.log("ÓÊ¼ş·¢ËÍ³É¹¦")
+        log.log("é‚®ä»¶å‘é€æˆåŠŸ")
     except Exception as e:
-        error_msg = str(e)
-        log.log("Error: ÎŞ·¨·¢ËÍÓÊ¼ş")
+        time.sleep(5)
+        config.setdefault('mail_host', "smtp.qq.com")
+        config.setdefault('mail_port', 25)
+        config.setdefault('mail_user', "jacklaiu@foxmail.com")
+        config.setdefault('mail_pass', "wesmpmzsdcsebfic")
+        config.setdefault('sender', "jacklaiu@foxmail.com")
+        log.log("æ­£åœ¨é‡å‘")
+        send(subject=subject, content=content, receivers=receivers, contenttype=contenttype)
     return "OK" if error_msg is None else error_msg
 
 @app.route('/smtpclient/sendPlain/<subject>/<content>/<receivers>')
 def sendPlain(subject=None, content=None, receivers='jacklaiu@qq.com'):
     send(subject, content, receivers, 'plain')
+    return "OK"
 
 @app.route('/smtpclient/sendHtml/<subject>/<content>/<receivers>')
 def sendHtml(subject=None, content=None, receivers='jacklaiu@qq.com'):
     send(subject, content, receivers, 'html')
+    return "OK"
 
 app.run(host="0.0.0.0", port=64210)
+

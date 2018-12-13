@@ -44,13 +44,23 @@ def send(subject=None, content=None, receivers='jacklaiu@qq.com', contenttype="p
         send(subject=subject, content=content, receivers=receivers, contenttype=contenttype)
     return "OK" if error_msg is None else error_msg
 
-@app.route('/smtpclient/sendPlain/<subject>/<content>/<receivers>')
-def sendPlain(subject=None, content=None, receivers='jacklaiu@qq.com'):
+@app.route('/smtpclient/sendPlain')
+def sendPlain():
+    subject = request.args.get('subject')
+    content = request.args.get('content')
+    receivers = request.args.get('receivers')
+    if subject is None or content is None or receivers is None:
+        return "Exception: subject¡¢content or receivers is None"
     send(subject, content, receivers, 'plain')
     return "OK"
 
-@app.route('/smtpclient/sendHtml/<subject>/<content>/<receivers>')
-def sendHtml(subject=None, content=None, receivers='jacklaiu@qq.com'):
+@app.route('/smtpclient/sendHtml')
+def sendHtml():
+    subject = request.args.get('subject')
+    content = request.args.get('content')
+    receivers = request.args.get('receivers')
+    if subject is None or content is None or receivers is None:
+        return "Exception: subject¡¢content or receivers is None"
     send(subject, content, receivers, 'html')
     return "OK"
 

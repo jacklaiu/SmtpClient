@@ -10,11 +10,11 @@ app = Flask(__name__, static_url_path='')
 app.config['JSON_AS_ASCII'] = False
 
 config = {}
-config.setdefault('mail_host', "smtp.sina.com")
+config.setdefault('mail_host', "smtp.qq.com")
 config.setdefault('mail_port', 25)
-config.setdefault('mail_user', "jacklaiu@sina.com")
-config.setdefault('mail_pass', "queue11235813")
-config.setdefault('sender', "jacklaiu@sina.com")
+config.setdefault('mail_user', "jacklaiu@foxmail.com")
+config.setdefault('mail_pass', "frbhvdnzbdohbfji")
+config.setdefault('sender', "jacklaiu@foxmail.com")
 
 def send(subject=None, content=None, receivers='jacklaiu@qq.com', contenttype="plain"):
 
@@ -34,14 +34,7 @@ def send(subject=None, content=None, receivers='jacklaiu@qq.com', contenttype="p
         smtpObj.sendmail(config['sender'], receivers, message.as_string())
         log.log("邮件发送成功")
     except Exception as e:
-        time.sleep(5)
-        config.setdefault('mail_host', "smtp.qq.com")
-        config.setdefault('mail_port', 25)
-        config.setdefault('mail_user', "jacklaiu@foxmail.com")
-        config.setdefault('mail_pass', "wesmpmzsdcsebfic")
-        config.setdefault('sender', "jacklaiu@foxmail.com")
-        log.log("正在重发")
-        send(subject=subject, content=content, receivers=receivers, contenttype=contenttype)
+        return
     return "OK" if error_msg is None else error_msg
 
 @app.route('/smtpclient/sendPlain')

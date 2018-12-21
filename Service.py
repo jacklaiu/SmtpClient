@@ -1,5 +1,5 @@
 # -*- coding: gbk -*-
-from flask import Flask, abort, request, jsonify
+from flask import Flask, abort, request, jsonify, render_template
 import smtplib
 from email.mime.text import MIMEText
 from email.header import Header
@@ -36,6 +36,10 @@ def send(subject=None, content=None, receivers='jacklaiu@qq.com', contenttype="p
     except Exception as e:
         return
     return "OK" if error_msg is None else error_msg
+
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 @app.route('/smtpclient/sendPlain')
 def sendPlain():

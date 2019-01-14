@@ -46,6 +46,8 @@ def sendPlain():
     subject = request.args.get('subject')
     content = request.args.get('content')
     receivers = request.args.get('receivers')
+    print "subject: " + subject
+    print "content: " + content
     if subject is None or content is None or receivers is None:
         return "Exception: subject¡¢content or receivers is None"
     send(subject, content, receivers, 'plain')
@@ -56,6 +58,8 @@ def sendHtml():
     subject = request.args.get('subject')
     content = request.args.get('content')
     receivers = request.args.get('receivers')
+    print "subject: " + subject
+    print "content: " + content
     if subject is None or content is None or receivers is None:
         return "Exception: subject¡¢content or receivers is None"
     send(subject, content, receivers, 'html')

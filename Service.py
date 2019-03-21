@@ -10,7 +10,7 @@ app = Flask(__name__, static_url_path='')
 app.config['JSON_AS_ASCII'] = False
 
 config = {}
-config.setdefault('mail_host', "mail.jacklaiu.cn")
+config.setdefault('mail_host', "localhost")
 config.setdefault('mail_port', 25)
 config.setdefault('mail_user', "athena@jacklaiu.cn")
 config.setdefault('mail_pass', "queue11235813")

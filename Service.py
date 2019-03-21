@@ -10,11 +10,11 @@ app = Flask(__name__, static_url_path='')
 app.config['JSON_AS_ASCII'] = False
 
 config = {}
-config.setdefault('mail_host', "smtp.qq.com")
+config.setdefault('mail_host', "mail.jacklaiu.cn")
 config.setdefault('mail_port', 25)
-config.setdefault('mail_user', "jacklaiu@foxmail.com")
-config.setdefault('mail_pass', "frbhvdnzbdohbfji")
-config.setdefault('sender', "jacklaiu@foxmail.com")
+config.setdefault('mail_user', "athena@jacklaiu.cn")
+config.setdefault('mail_pass', "queue11235813")
+config.setdefault('sender', "athena@jacklaiu.cn")
 
 def send(subject=None, content=None, receivers='jacklaiu@qq.com', contenttype="plain"):
 
@@ -46,8 +46,6 @@ def sendPlain():
     subject = request.args.get('subject')
     content = request.args.get('content')
     receivers = request.args.get('receivers')
-    print "subject: " + subject
-    print "content: " + content
     if subject is None or content is None or receivers is None:
         return "Exception: subject¡¢content or receivers is None"
     send(subject, content, receivers, 'plain')
@@ -58,8 +56,6 @@ def sendHtml():
     subject = request.args.get('subject')
     content = request.args.get('content')
     receivers = request.args.get('receivers')
-    print "subject: " + subject
-    print "content: " + content
     if subject is None or content is None or receivers is None:
         return "Exception: subject¡¢content or receivers is None"
     send(subject, content, receivers, 'html')
